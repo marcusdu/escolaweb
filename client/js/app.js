@@ -1,2 +1,2 @@
 // module registration
-angular.module('escolaweb', ['ui.bootstrap']);
+angular.module('escolaweb', ['ui.router', 'oc.lazyLoad']);

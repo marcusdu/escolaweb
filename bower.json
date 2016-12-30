@@ -1,0 +1,18 @@
+{
+  "name": "escolaweb",
+  "description": "EscolaWeb - Seu sistema de gerenciamento de escola",
+  "main": "index.js",
+  "authors": [
+    "mnatan.brito@gmail.com"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/mnatanbrito/escolaweb",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/js/libs/",
+    "test",
+    "tests"
+  ]
+}

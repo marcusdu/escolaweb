@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 var Utils = (function () {
     var _makePath = function (path) {
-        return './{0}'.replace('{0}', path);
+        return './server/{0}'.replace('{0}', path);
     };
     var _uid = function (len) {
         var buf = []

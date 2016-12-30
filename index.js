@@ -1,7 +1,7 @@
 // modules
 var compression = require('compression');
 var path = require('path');
-var config = require('./config')();
+var config = require('./server/config')();
 var _ = require('lodash');
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
@@ -11,7 +11,7 @@ var morgan = require('morgan');
 var Q = require('q');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var utils = require('./utils');
+var utils = require('./server/utils');
 var login = require('connect-ensure-login');
 var express = require('express');
 var app = express();
@@ -22,6 +22,7 @@ mongoose.connect(config.db, function(error){
 });
 
 // middleware configuration
+app.use(express.static('client'));
 app.use(compression());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -29,17 +30,17 @@ app.use(morgan(config.log));
 app.use(cookieParser(config.auth.secretKey));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 app.use(express.Router());
 
 // custom modules registration
 var models = require(utils.makePath('models'))(mongoose);
-var authClient = require(utils.makePath('authClient'))(passport, mongoose);
+// var authClient = require(utils.makePath('authClient'))(passport, mongoose);
 
 // custom routes registration
 var routes = require(utils.makePath('routes'))(app, mongoose, passport);
-//app.use('/api', routes.setup);
+app.use('/api', routes.escola);
 //app.use('/api', routes.auth);
 //app.use('/api', routes.doador);
 
