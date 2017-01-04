@@ -13,7 +13,7 @@ exports = module.exports = function () {
             options: {},
             log: 'dev',
             auth: {
-                secretKey: '65759c2fb4e4fc76f7e2a16ab4ef56a182122b4eefbc694619678b4c809dafc7',
+                secretKey: '4b59eee28b47e80904a26c524305eedb49c1e3fa54a6a1829fd7e7a2fad511ce',
                 issuer: 'escolaweb',
                 audience: 'webapp',
                 jwtSession: { session: false }
@@ -24,7 +24,7 @@ exports = module.exports = function () {
             db: _db,
             log: 'common',
             auth: {
-                secretKey: '65759c2fb4e4fc76f7e2a16ab4ef56a182122b4eefbc694619678b4c809dafc7',
+                secretKey: '4b59eee28b47e80904a26c524305eedb49c1e3fa54a6a1829fd7e7a2fad511ce',
                 issuer: 'escolaweb',
                 audience: 'webapp',
                 jwtSession: { session: false }

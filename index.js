@@ -16,6 +16,9 @@ var login = require('connect-ensure-login');
 var express = require('express');
 var app = express();
 
+// set base path for module loading
+global.__base = __dirname + '/';
+
 // db connection
 mongoose.connect(config.db, function(error){
     if(error){ console.error(error); }
@@ -30,19 +33,21 @@ app.use(morgan(config.log));
 app.use(cookieParser(config.auth.secretKey));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.Router());
 
 // custom modules registration
 var models = require(utils.makePath('models'))(mongoose);
-// var authClient = require(utils.makePath('authClient'))(passport, mongoose);
+
+// set up user authentication
+var auth = require(utils.makePath('auth'))(passport, mongoose, config);
 
 // custom routes registration
-var routes = require(utils.makePath('routes'))(app, mongoose, passport);
+var routes = require(utils.makePath('routes'))(app, mongoose, passport, config);
 app.use('/api', routes.escola);
-//app.use('/api', routes.auth);
-//app.use('/api', routes.doador);
+app.use('/api', routes.usuario);
+app.use('/api', routes.setup);
 
 // error handling middleware
 app.use(function(err, req, res, next){

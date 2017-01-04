@@ -1,2 +1,2 @@
 // module registration
-angular.module('escolaweb', ['ui.router', 'oc.lazyLoad']);
+angular.module('escolaweb', ['ngMaterial', 'ngAnimate', 'ui.router', 'oc.lazyLoad', 'ngMdIcons']);

@@ -1,18 +1,17 @@
-(function () {
+(function(){
     'use strict';
 
-    // controller registration
-    angular.module('escolaweb')
-        .controller('HomeAlunosController', HomeAlunosController);
-
     // controller constructor
-    function HomeAlunosController($scope) {
-        // save the context
+    function HomeAlunoController($scope){
+        // get the context
         var ctx = this;
 
-        ctx.msg = 'Home Alunos';
+
     }
 
-    // DI registration
-    HomeAlunosController.$inject = ['$scope'];
+    // register DI
+    HomeAlunoController.$inject = ['$scope'];
+
+    // controller registration
+    angular.module('escolaweb').controller('HomeAlunoController', HomeAlunoController);
 })();

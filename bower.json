@@ -14,5 +14,13 @@
     "client/js/libs/",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular-animate": "^1.6.1",
+    "angular-material": "^1.1.1",
+    "angular-aria": "^1.6.1",
+    "angular-messages": "^1.6.1",
+    "angular-material-icons": "^0.7.1",
+    "satellizer": "^0.15.5"
+  }
 }

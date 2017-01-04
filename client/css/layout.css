@@ -1,3 +1,43 @@
 .pt50{
     padding-top: 50px;
 }
+.p25{padding: 25px;}
+
+md-content.md-default-theme {
+  background-color: #eee;
+}
+md-card {
+  background-color: #fff;
+}
+
+md-card h2:last-of-type(0){
+margin-top: 0;
+}
+
+md-toolbar .md-button.md-default-theme{
+    border-radius: 99%;
+}
+h2 {
+  font-weight: 400;
+}
+.md-toolbar-tools-bottom {
+  font-size: small;
+}
+.md-toolbar-tools-bottom:last-child{
+    opacity: .8;
+}
+
+md-toolbar:not(.md-hue-1), .md-fab {
+  fill: #fff;
+}
+md-sidenav {
+  fill: #737373;
+}
+
+md-sidenav ng-mg-icon{
+    position: relative;
+    top: 5px;
+}
+.user-avatar {
+  border-radius: 99%;
+}

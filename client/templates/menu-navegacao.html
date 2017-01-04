@@ -1,11 +1,35 @@
-<div class="panel panel-default">
-    <div class="panel-heading">Menu</div>
-    <div class="panel-body">
-        <div class="list-group">
-            <a class="list-group-item active" href="#">Gerenciar alunos</a>
-            <a class="list-group-item" href="#">Gerenciar professores</a>
-            <a class="list-group-item" href="#">Configurações</a>
-            <a class="list-group-item" href="#">Sair</a>
+<md-sidenav layout="column" md-component-id="left" class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="true">
+    <md-toolbar class="md-tall md-hue-2">
+        <span flex></span>
+        <div layout="column" class="md-toolbar-tools-bottom inset">
+            <user-avatar></user-avatar>
+            <span></span>
+            <div>{{usuario.nome}}</div>
+            <div>{{usuario.email}}</div>
         </div>
-    </div>
-</div>
+    </md-toolbar>
+    <md-list>
+        <md-item ng-repeat="item in menu">
+            <a>
+                <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                    <div class="inset">
+                        <ng-md-icon icon="{{item.icone}}"></ng-md-icon>
+                    </div>
+                    <div class="inset"><a title="{{item.titulo}}" ui-sref="{{item.estado}}">{{item.titulo}}</a></div>
+                </md-item-content>
+            </a>
+        </md-item>
+        <md-divider></md-divider>
+        <md-subheader>Gerenciamento</md-subheader>
+        <md-item ng-repeat="item in admin">
+            <a>
+                <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                    <div class="inset">
+                        <ng-md-icon icon="{{item.icone}}"></ng-md-icon>
+                    </div>
+                    <div class="inset"><a title="{{item.titulo}}" ui-sref="{{item.estado}}">{{item.titulo}}</a></div>
+                </md-item-content>
+            </a>
+        </md-item>
+    </md-list>
+</md-sidenav>

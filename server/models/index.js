@@ -6,7 +6,12 @@ var models = function(mongoose){
 
     return {
         estado: _require('./estado'),
-        escola: _require('./escola')
+        escola: _require('./escola'),
+        aluno: _require('./aluno'),
+        professor: _require('./professor'),
+        usuario: _require('./usuario'),
+        perfil: _require('./perfil'),
+        acesso: _require('./acesso')
     };
 };
 module.exports = models;
