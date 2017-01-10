@@ -35,7 +35,7 @@ var Escola = function (app, mongoose, passport) {
         });
     });*/
 
-    // GET /api/Escolas
+    // GET /api/usuario/987s9d8aas98da98a09s8d/escolas
     router.get('/escolas', passport.authenticate('jwt', { session: false }), function (req, res) {
         // query database
         Escolas.find({

@@ -14,24 +14,24 @@ angular.module('escolaweb')
                 // itens do menu normal
                 $scope.menu = [{
                     titulo: 'Home',
-                    estado: 'home',
+                    estado: 'base.home',
                     icone: 'dashboard'
                 },
                 {
                     titulo: 'Gerenciar alunos',
-                    estado: 'alunos.home',
+                    estado: 'base.alunos',
                     icone: 'dashboard'
                 },
                 {
                     titulo: 'Gerenciar escolas',
-                    estado: 'escolas.home',
+                    estado: 'base.escolas',
                     icone: 'message'
                 }];
 
                 // itens do menu admin
                 $scope.admin = [{
                     titulo: 'Configurações',
-                    estado: 'configuracoes',
+                    estado: 'base.configuracoes',
                     icone: 'settings'
                 }];
             }

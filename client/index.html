@@ -20,55 +20,8 @@
     <![endif]-->
 </head>
 
-<body layout="row">
-  <!-- menu lateral -->
-  <menu-navegacao></menu-navegacao>
-
-  <div layout="column" class="relative" layout-fill>
-    <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="showAdd($event)">
-      <ng-md-icon icon="add"></ng-md-icon>
-    </md-button>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <md-button ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
-          <ng-md-icon icon="menu"></ng-md-icon>
-        </md-button>
-        <h3> Painel </h3>
-        <span flex></span>
-        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-          <ng-md-icon icon="search"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-          <ng-md-icon icon="more_vert"></ng-md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
-    <md-toolbar class="md-hue-1" ng-show="showSearch">
-      <div class="md-toolbar-tools">
-        <md-button ng-click="showSearch = !showSearch" aria-label="Back">
-          <ng-md-icon icon="arrow_back"></ng-md-icon>
-        </md-button>
-        <h3 flex="10">
-          Back
-        </h3>
-        <md-input-container md-theme="input" flex>
-          <label>&nbsp;</label>
-          <input ng-model="search.who" placeholder="enter search">
-        </md-input-container>
-        <md-button aria-label="Search" ng-click="showSearch = !showSearch">
-          <ng-md-icon icon="search"></ng-md-icon>
-        </md-button>
-        <md-button aria-label="Open Settings" ng-click="showListBottomSheet($event)">
-          <ng-md-icon icon="more_vert"></ng-md-icon>
-        </md-button>
-      </div>
-
-    </md-toolbar>
-    <md-content flex md-scroll-y class="p25">
-      <!-- ui router placeholder -->
-      <ui-view layout="column" class="relative" layout-fill role="main">
-      </ui-view>
-    </md-content>
+<body>
+  <div ui-view>
   </div>
 
   <!-- libs -->
@@ -78,9 +31,10 @@
   <script src="js/libs/angular-aria/angular-aria.min.js"></script>
   <script src="js/libs/angular-messages/angular-messages.min.js"></script>
   <script src="js/libs/angular-material/angular-material.min.js"></script>
-
   <script src="js/libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="js/libs/satellizer/dist/satellizer.min.js"></script>
   <script src="js/libs/oclazyload/dist/ocLazyLoad.min.js"></script>
+  <script src="js/libs/angular-resource/angular-resource.min.js"></script>
   <script src="js/libs/angular-material-icons/angular-material-icons.min.js"></script>
 
   <!-- app -->

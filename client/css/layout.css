@@ -41,3 +41,21 @@ md-sidenav ng-mg-icon{
 .user-avatar {
   border-radius: 99%;
 }
+
+.page-login md-card {
+  padding: 0!important;
+}
+
+.page-login md-card md-card-title {
+  background-color: dodgerblue;
+}
+
+.login-form md-card{
+  padding: 0!important;
+}
+
+.login-form md-card md-card-title{
+  background-color: blue;
+}
+
+
