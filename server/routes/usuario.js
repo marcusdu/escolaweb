@@ -81,11 +81,8 @@ var Usuario = function (app, mongoose, passport, config) {
     router.post('/usuario/login', passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
         // obter parâmetros
         var usuario = req.user._id;
-        var appId = req.body.appId;
 
-        console.log('usuario = {0} | appId = {1}'
-            .replace('{0}', usuario)
-            .replace('{1}', appId));
+        console.log('usuario = {0}'.replace('{0}', usuario));
 
         console.log('log = {0}'.replace('{0}', config.log));
 
@@ -103,15 +100,13 @@ var Usuario = function (app, mongoose, passport, config) {
         });
 
         // verificar se já existe acesso do usuário no celular informado
-        Acessos.findOneAndUpdate({
-            'usuario': req.user._id,
-            'appId': appId,
-            'ativo': true
-        }, {
-                'ativo': false
-            }, {
-                new: true
-            }, function (errUpdate, acesso) {
+        Acessos.findOneAndUpdate(
+            {
+                'usuario': req.user._id,
+                'ativo': true
+            },
+            { 'ativo': false },
+            { new: true }, function (errUpdate, acesso) {
                 if (errUpdate) {
                     return res.status(500).json({
                         status: 'error',
@@ -126,7 +121,6 @@ var Usuario = function (app, mongoose, passport, config) {
                 Acessos.create({
                     usuario: usuario,
                     token: token,
-                    appId: appId,
                     ativo: true
                 }, function (errCreate, novoAcesso) {
                     if (errCreate) {

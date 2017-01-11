@@ -15,8 +15,18 @@ var Auth = function (passport, mongoose, config) {
 
     // config auth strategy
     passport.use(Usuario.createStrategy());
-    passport.serializeUser(Usuario.serializeUser());
-    passport.deserializeUser(Usuario.deserializeUser());
+    passport.serializeUser(function(user, done){
+        console.log('serializeUser = {0}'.replace('{0}', user._id));
+        done(null, user._id);
+    });
+    passport.deserializeUser(function(id, done){
+        console.log('deserializeUser = {0}'.replace('{0}', id));
+        Usuario.findById(id, function(err, user){
+            done(err, user);
+        });
+    });
+    //passport.serializeUser(Usuario.serializeUser());
+    //passport.deserializeUser(Usuario.deserializeUser());
 
     // use jwt authentication
     passport.use(new JwtStrategy({
@@ -28,6 +38,8 @@ var Auth = function (passport, mongoose, config) {
     }, function (jwtpayload, done) {
         // get parameters from jwt sent in the header
         var _email = jwtpayload.sub;
+
+        console.log('email = {0}'.replace('{0}', _email));
 
         // // validate the token before passing to the application
         // jwt.verify(jwtpayload, config.auth.secretKey, {

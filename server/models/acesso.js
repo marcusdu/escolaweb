@@ -8,11 +8,11 @@ var Acesso = function (mongoose) {
         // relationships
         usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' },
         token: { type: String },
-        appId: { type: String },
         ativo: { type: Boolean, default: true },
         dataCriacao: { type: Date, default: Date.now },
         dataAtualizacao: { type: Date, default: Date.now }
     });
+    
 
     // log
     console.log('acesso model registration finished');

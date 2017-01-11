@@ -24,22 +24,10 @@ angular.module('escolaweb')
 
         // ===== auth filters =====
 
-        // ===== rota raiz =====
-        /*$stateProvider.state('root', {
-            abstract: true,
-            views: {
-                'layout@': {
-                    templateUrl: 'templates/layout.html'
-                }
-            }
-        });*/
-
-        // ===== rota home =====
-        $stateProvider.state('base', {
-            templateUrl: 'templates/layout.html'
-        });
+        // ===== rota base =====
+        $stateProvider.state('base', { templateUrl: 'templates/layout.html' });
         $stateProvider.state('base.home', {
-            url: '/home',
+            url: '/',
             views: {
                 'content': {
                     templateUrl: 'templates/home.html',
@@ -51,13 +39,14 @@ angular.module('escolaweb')
                                 type: 'js',
                                 path: 'js/controllers/home.controller.js'
                             }]);
-                        }]
+                        }],
+                        loginRequired: _loginRequired
                     }
                 }
             }
         });
 
-        // rota de login
+        // ===== rota de login =====
         $stateProvider.state('login', {
             url: '/login',
             views: {
@@ -76,7 +65,8 @@ angular.module('escolaweb')
                                     type: 'js',
                                     path: 'js/controllers/login.controller.js'
                                 }]);
-                        }]
+                        }],
+                        skipIfLoggedIn: _skipIfLoggedIn
                     }
                 }
             }
@@ -117,7 +107,8 @@ angular.module('escolaweb')
                                 type: 'js',
                                 path: 'js/controllers/home.alunos.controller.js'
                             }]);
-                        }]
+                        }],
+                        loginRequired: _loginRequired
                     }
                 }
             }
@@ -149,5 +140,5 @@ angular.module('escolaweb')
             }
         });
 
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/');
     });

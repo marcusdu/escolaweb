@@ -10,33 +10,8 @@ var Escola = function (app, mongoose, passport) {
     var router = express.Router();
     var Escolas = mongoose.model('Escola');
 
-    // get all doadores
-    /*router.get('/escola/:id', function (req, res) {
-        /Doadores.find({}, function (err, doadores) {
-            if (err) {
-                return res.status(500).json({
-                    status: 'error',
-                    error: {
-                        message: 'Ocorreu um erro durante o processamento. Contacte o administrador do sistema.',
-                        code: ''
-                    }
-                });
-            }
-
-            // retorna o usuário encontrado
-            return res.status(200).json({
-                status: 'success',
-                data: doadores
-            });
-        });
-
-        return res.status(200).json({
-            message: 'It works!'
-        });
-    });*/
-
-    // GET /api/usuario/987s9d8aas98da98a09s8d/escolas
-    router.get('/escolas', passport.authenticate('jwt', { session: false }), function (req, res) {
+    // GET /api/escolas
+    router.get('/escolas', passport.authenticate('jwt'), function (req, res) {
         // query database
         Escolas.find({
             usuario: req.user._id
@@ -59,7 +34,7 @@ var Escola = function (app, mongoose, passport) {
     });
 
     // novo doador
-    router.post('/escola', passport.authenticate('jwt', { session: false }), function (req, res) {
+    router.post('/escola', passport.authenticate('jwt'), function (req, res) {
         // get data from request
         var _usuario = req.body.usuario;
         var _nome = req.body.nome;
