@@ -31,9 +31,11 @@
                         // redirecionar para home
                         $location.path('/');
                     }).catch(function (error) {
-                        $mdToast.show($mdToast.simple()
-                            .textContent(error.data.message)
-                            .hideDelay(ctx.constants.hideDelay));
+                        if (error.status === 401) {
+                            $mdToast.show($mdToast.simple()
+                                .textContent('Usuário ou senha inválidos!')
+                                .hideDelay(ctx.constants.hideDelay));
+                        }
                     });
                 }
             };

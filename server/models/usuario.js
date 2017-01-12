@@ -13,15 +13,15 @@ var Usuario = function (mongoose) {
     var UsuarioSchema = new Schema({
         // relationships
         perfil: { type: Schema.Types.ObjectId, ref: 'Perfil' },
+        nome: { type: String, required: [true, 'Campo obrigatório!']},
         email: { type: String, require: [true, 'Campo obrigatório!'] },
-        emailConfirmado: Boolean,
-        ativo: Boolean,
+        emailConfirmado: { type: Boolean },
+        ativo: { type: Boolean },
         dataCriacao: { type: Date, default: Date.now },
         dataAtualizacao: { type: Date,  default: Date.now }
     });
 
     UsuarioSchema.plugin(passportLocalMongoose, {
-        selectFields: '_id',
         usernameField: 'email',
         hashField: 'password_hash',
         saltField: 'salt',

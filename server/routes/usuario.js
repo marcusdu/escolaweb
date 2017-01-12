@@ -7,26 +7,35 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 
-var Usuario = function (app, mongoose, passport, config) {
-    /*for (var i in config) {
-        console.log('{0} = {1}'.replace('{0}', i).replace('{1}', config[i]));
-    }*/
+var print = function(obj){
+    if(!obj) return;
 
-    // get router
+    for(var p in obj){
+        console.log('{0} = {1}'.replace('{0}', p).replace('{1}', obj[p]));
+    }
+};
+
+var Usuario = function (app, mongoose, passport, config) {
     var router = express.Router();
-    var Usuario = mongoose.model('Usuario');
+    var Usuarios = mongoose.model('Usuario');
     var Acessos = mongoose.model('Acesso');
 
     router.post('/usuario', function (req, res) {
-        // get user data from request
+        // obter dados da requisição
+        var _nome = req.body.nome;
         var _email = req.body.email;
         var _password = req.body.password;
+        
+        console.log('nome = {0}, email = {1}, password = {2}'.replace('{0}', _nome).replace('{1}', _email).replace('{2}', _password));
 
         try {
+            // verificações de segurança
+            if (!_nome || _nome.length === 0) throw new Error('Nome inválido!');
             if (!_email || _email.length === 0) throw new Error('Usuário ou senha inválidos');
             if (!_password || _password.length <= 6) throw new Error('Usuário ou senha inválidos');
 
-            Usuario.findOne({ email: _email }, function (err, usuario) {
+            Usuarios.findOne({ email: _email }, function (err, usuario) {
+                // verificar se ocorreu algum erro na consulta
                 if (err) {
                     return res.status(500).json({
                         status: 'error',
@@ -47,15 +56,16 @@ var Usuario = function (app, mongoose, passport, config) {
                     });
                 }
 
-                // register new user
-                Usuario.register(new Usuario({
+                // cadastrar novo usuário
+                Usuarios.register(new Usuarios({
+                    nome: _nome,
                     email: _email,
                     ativo: true,
                     emailConfirmado: false,
                     dataCriacao: new Date()
-                }), _password, function (err, account) {
+                }), _password, function (err, novoUsuario) {
                     if (err) {
-                        // save error code
+                        // salvar log do erro no banco
                         return res.status(401).json({
                             status: 'error',
                             error: {
@@ -66,8 +76,8 @@ var Usuario = function (app, mongoose, passport, config) {
                         });
                     }
 
-                    // return success status
-                    return res.status(200).json({ status: 'success', message: 'Usuário criado com sucesso.' });
+                    // execução com sucesso
+                    return res.status(200).json({ message: 'Usuário criado com sucesso.' });
                 });
             });
         } catch (e) {
@@ -77,83 +87,32 @@ var Usuario = function (app, mongoose, passport, config) {
         }
     });
 
-    // TODO: Gerar resposta UNAUTHORIZED
-    router.post('/usuario/login', passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
+    // POST api/usuario/login
+    router.post('/usuario/login', passport.authenticate('local', { session: false }), function (req, res) {
         // obter parâmetros
+        var _expiration = 60 * 60 * 24; // expires in 24 hours,
         var usuario = req.user._id;
 
-        console.log('usuario = {0}'.replace('{0}', usuario));
+        console.log('email = {0}, id = {1}'.replace('{0}', req.user.email).replace('{1}', req.user._id));
 
-        console.log('log = {0}'.replace('{0}', config.log));
-
-        var _expiration = 60 * 60 * 24; // expires in 24 hours,
-
-        // TODO: make sure the user exists
-
-        // TODO: make sure the password matches the hash
-
-        // retornar token
-        var token = jwt.sign(req.user, config.auth.secretKey, {
+        // gerar a token
+        var token = jwt.sign({
+            email: req.user.email,
+            id: req.user._id
+        }, config.auth.secretKey, {
             issuer: config.auth.issuer,
-            audience: config.auth.audience,
-            subject: req.user.email
+            audience: config.auth.audience
         });
 
-        // verificar se já existe acesso do usuário no celular informado
-        Acessos.findOneAndUpdate(
-            {
-                'usuario': req.user._id,
-                'ativo': true
-            },
-            { 'ativo': false },
-            { new: true }, function (errUpdate, acesso) {
-                if (errUpdate) {
-                    return res.status(500).json({
-                        status: 'error',
-                        error: {
-                            message: 'Ocorreu um erro durante o processamento. Contacte o administrador do sistema.',
-                            code: ''
-                        }
-                    });
-                }
+        console.log('gerando token = {0}'.replace('{0}', token));
 
-                // criar novo acesso
-                Acessos.create({
-                    usuario: usuario,
-                    token: token,
-                    ativo: true
-                }, function (errCreate, novoAcesso) {
-                    if (errCreate) {
-                        return res.status(500).json({
-                            status: 'error',
-                            error: {
-                                message: 'Ocorreu um erro durante o processamento. Contacte o administrador do sistema.',
-                                code: ''
-                            }
-                        });
-                    }
-
-                    // retorna a token alterado
-                    return res.status(200).json({ access_token: token });
-                });
-            });
-    });
-
-    // verificar se usuário já existe
-    router.get('/usuario', function (req, res) {
-        // buscar parâmetros da requisição
-        var username = req.body.username;
-        if (!username || typeof username !== 'string' || username.length === 0) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Parâmetro username inválido!'
-            });
-        }
-
-        // buscar usuário no banco
-        Usuario.findByUsername(username, function (err, usuario) {
-            // em caso de erro
-            if (err) {
+        // registrar acesso no banco
+        Acessos.create({
+            usuario: usuario,
+            token: token,
+            ativo: true
+        }, function (errCreate, acesso) {
+            if (errCreate) {
                 return res.status(500).json({
                     status: 'error',
                     error: {
@@ -163,29 +122,20 @@ var Usuario = function (app, mongoose, passport, config) {
                 });
             }
 
-            // retorna o usuário encontrado
-            return res.status(200).json({
-                status: 'success',
-                data: usuario
-            });
+            // retorna a token alterado
+            return res.status(200).json({ access_token: token });
         });
-    });
-
-    router.get('/logout', function (req, res) {
-        req.logout();
-        res.redirect('/');
     });
 
     router.get('/usuario/me', passport.authenticate('jwt', { session: false }), function (req, res) {
         return res.status(200).json({
-            status: 'success',
-            data: req.user
+            nome: req.user.nome,
+            email: req.user.email
         });
     });
 
     // log
     console.log('usuario route registration finished');
-
     return router;
 };
 

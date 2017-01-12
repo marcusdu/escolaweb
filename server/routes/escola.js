@@ -8,10 +8,13 @@ var express = require('express');
 var Escola = function (app, mongoose, passport) {
     // get router
     var router = express.Router();
+    var Usuarios = mongoose.model('Usuario');
     var Escolas = mongoose.model('Escola');
 
     // GET /api/escolas
-    router.get('/escolas', passport.authenticate('jwt'), function (req, res) {
+    router.get('/escolas', passport.authenticate('jwt', { session: false }), function (req, res) {
+        // buscar o id do usuario
+
         // query database
         Escolas.find({
             usuario: req.user._id
@@ -34,7 +37,7 @@ var Escola = function (app, mongoose, passport) {
     });
 
     // novo doador
-    router.post('/escola', passport.authenticate('jwt'), function (req, res) {
+    router.post('/escola', passport.authenticate('jwt', { session: false }), function (req, res) {
         // get data from request
         var _usuario = req.body.usuario;
         var _nome = req.body.nome;
