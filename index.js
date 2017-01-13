@@ -54,6 +54,7 @@ var auth = require(utils.makePath('auth'))(passport, mongoose, config);
 // custom routes registration
 var routes = require(utils.makePath('routes'))(app, mongoose, passport, config);
 app.use('/api', routes.escola);
+app.use('/api', routes.aluno);
 app.use('/api', routes.usuario);
 app.use('/api', routes.setup);
 

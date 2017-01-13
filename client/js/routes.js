@@ -95,7 +95,7 @@ angular.module('escolaweb')
 
         // rota de alunos
         $stateProvider.state('base.alunos', {
-            url: '/home',
+            url: '/alunos',
             views: {
                 'content': {
                     templateUrl: 'templates/home-alunos.html',
@@ -104,6 +104,10 @@ angular.module('escolaweb')
                     resolve: {
                         controller: ['$ocLazyLoad', function ($ocLazyLoad) {
                             return $ocLazyLoad.load([{
+                                type: 'js',
+                                path: 'js/services/aluno.service.js'
+                            },
+                            {
                                 type: 'js',
                                 path: 'js/controllers/home.alunos.controller.js'
                             }]);

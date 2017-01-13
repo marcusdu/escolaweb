@@ -6,22 +6,16 @@ var Escola = function (mongoose) {
     var Schema = mongoose.Schema;
 
     var EscolaSchema = new Schema({
-        // relationships
-        usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' },
-
         // properties
         nome: { type: String },
         endereco: {
-            rua: {
-                type: String
-            },
-            bairro: {
-                type: String
-            },
-            cidade: {
-                type: String
-            },
+            // relationships
             estado: { type: Schema.Types.ObjectId, ref: 'Estado' },
+
+            // properties
+            rua: { type: String },
+            bairro: { type: String },
+            cidade: { type: String },            
             pais: { type: String },
             cep: { type: String }
         },

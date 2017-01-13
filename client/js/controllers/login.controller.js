@@ -25,7 +25,7 @@
                 login: function () {
                     return authService.login(ctx.model.usuario).then(function () {
                         $mdToast.show($mdToast.simple()
-                            .textContent('You have successfully signed in!')
+                            .textContent('Login efetuado com sucesso!')
                             .hideDelay(ctx.constants.hideDelay));
 
                         // redirecionar para home

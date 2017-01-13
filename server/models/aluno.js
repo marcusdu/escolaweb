@@ -5,6 +5,8 @@ var Aluno = function (mongoose) {
     var Schema = mongoose.Schema;
     var AlunoSchema = new Schema({
         // relationships
+        escola: { type: Schema.Types.ObjectId, ref: 'Escola' },
+        usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' },
 
         // properties
         nome: { type: String },

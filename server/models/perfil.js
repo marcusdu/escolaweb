@@ -15,6 +15,9 @@ var Perfil = function (mongoose) {
             type: Boolean,
             required: [true, 'Campo obrigatório!']
         }
+    }, {
+        // pluralizar corretamente
+        collection: 'perfis'
     });
 
     // log

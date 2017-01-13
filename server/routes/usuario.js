@@ -22,6 +22,8 @@ var Usuario = function (app, mongoose, passport, config) {
 
     router.post('/usuario', function (req, res) {
         // obter dados da requisição
+        var _escola = req.body.escola;
+        var _perfil = req.body.perfil;
         var _nome = req.body.nome;
         var _email = req.body.email;
         var _password = req.body.password;
@@ -30,11 +32,13 @@ var Usuario = function (app, mongoose, passport, config) {
 
         try {
             // verificações de segurança
+            if (!_escola || _escola.length === 0) throw new Error('Escola inválida!');
+            if (!_perfil || _perfil.length === 0) throw new Error('Perfil inválido!');
             if (!_nome || _nome.length === 0) throw new Error('Nome inválido!');
             if (!_email || _email.length === 0) throw new Error('Usuário ou senha inválidos');
             if (!_password || _password.length <= 6) throw new Error('Usuário ou senha inválidos');
 
-            Usuarios.findOne({ email: _email }, function (err, usuario) {
+            Usuarios.findOne({ email: _email, escola: _escola }, function (err, usuario) {
                 // verificar se ocorreu algum erro na consulta
                 if (err) {
                     return res.status(500).json({
@@ -58,6 +62,8 @@ var Usuario = function (app, mongoose, passport, config) {
 
                 // cadastrar novo usuário
                 Usuarios.register(new Usuarios({
+                    escola: _escola,
+                    perfil: _perfil,
                     nome: _nome,
                     email: _email,
                     ativo: true,

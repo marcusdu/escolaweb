@@ -37,14 +37,14 @@ var Escola = function (app, mongoose, passport) {
     });
 
     // novo doador
-    router.post('/escola', passport.authenticate('jwt', { session: false }), function (req, res) {
+    // passport.authenticate('jwt', { session: false })
+    router.post('/escola', function (req, res) {
         // get data from request
-        var _usuario = req.body.usuario;
         var _nome = req.body.nome;
         var _endereco = req.body.endereco;
 
         // validate data
-        Escolas.findOne({ nome: _nome, usuario: _usuario }, function (err, escola) {
+        Escolas.findOne({ nome: _nome }, function (err, escola) {
             if (err) {
                 return res.status(500).json({
                     status: 'error',
@@ -57,7 +57,6 @@ var Escola = function (app, mongoose, passport) {
 
             if (!escola) {
                 Escolas.create({
-                    usuario: _usuario,
                     nome: _nome,
                     endereco: _endereco
                 }, function (_err, _escola) {

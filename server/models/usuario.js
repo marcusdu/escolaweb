@@ -12,7 +12,10 @@ var Usuario = function (mongoose) {
     // optional to define custom properties in the Usuario model
     var UsuarioSchema = new Schema({
         // relationships
+        escola: { type: Schema.Types.ObjectId, ref: 'Escola' },
         perfil: { type: Schema.Types.ObjectId, ref: 'Perfil' },
+
+        // properties
         nome: { type: String, required: [true, 'Campo obrigatório!']},
         email: { type: String, require: [true, 'Campo obrigatório!'] },
         emailConfirmado: { type: Boolean },

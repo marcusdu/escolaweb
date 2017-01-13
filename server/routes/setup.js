@@ -11,7 +11,21 @@ var Setup = function (app, mongoose, passport) {
     var Estados = mongoose.model('Estado');
 
     // novo doador
-    router.post('/setup', passport.authenticate('jwt', { session: false }), function (req, res) {
+    // passport.authenticate('jwt', { session: false })
+    router.get('/setup', function (req, res) {
+        Estados.find({}, function(err, estados){
+            if(err){
+                return res.status(500).json({
+                    error: err
+                });
+            }
+
+            return res.status(200).json({
+                data: estados
+            });
+        });
+    });
+    router.post('/setup', function (req, res) {
         // criar Estados
         var estados = [
             {

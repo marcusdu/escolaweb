@@ -1,1 +1,5 @@
-<h3>Alunos</h3>
+<div ng-init="ctx.loading.load()">
+    <h3>Alunos</h3>
+    <table-alunos alunos="ctx.model.alunos" ng-cloak>
+    </table-alunos>
+</div>

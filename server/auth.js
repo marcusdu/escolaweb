@@ -18,22 +18,7 @@ var Auth = function (passport, mongoose, config) {
 
     // configuração do passport-local-mongoose
     passport.use(Usuarios.createStrategy());
-    //passport.serializeUser(Usuarios.serializeUser());
-    //passport.deserializeUser(Usuarios.deserializeUser());
-
-    /*passport.serializeUser(function(user, done){
-        console.log('serializeUser = {0}'.replace('{0}', user.email));
-        done(null, user.email);
-    });
-    passport.deserializeUser(function(email, done){
-        console.log('deserializeUser = {0}'.replace('{0}', email));
-        Usuarios.findOne({
-            email: email
-        }, function(err, usuario){
-            done(err, usuario);
-        });
-    });*/
-
+    
     // configuração do passport-jwt
     passport.use(new JwtStrategy({
         secretOrKey: config.auth.secretKey,
@@ -42,18 +27,20 @@ var Auth = function (passport, mongoose, config) {
         audience: config.auth.audience,
         ignoreExpiration: false
     }, function (jwtpayload, done) {
-        print(jwtpayload);
+        // selecionar os campos a serem retornados
+        var fieldsToReturn = 'escola perfil nome email ativo';
 
         // get parameters from jwt sent in the header
         var _email = jwtpayload.email;
 
         // buscar o usuário com as credenciais contidas na bearer token
-        Usuarios.findByUsername(_email, function (err, usuario) {
+        Usuarios.findOne({
+            email: _email
+        }, fieldsToReturn, function(err, usuario){
             if (err) { return done(err, false); }
             if (usuario) { done(null, usuario); }
             else { done(null, false); }
         });
-        // });
     }));
 
     // log
