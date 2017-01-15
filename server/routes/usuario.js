@@ -7,10 +7,10 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 
-var print = function(obj){
-    if(!obj) return;
+var print = function (obj) {
+    if (!obj) return;
 
-    for(var p in obj){
+    for (var p in obj) {
         console.log('{0} = {1}'.replace('{0}', p).replace('{1}', obj[p]));
     }
 };
@@ -25,9 +25,10 @@ var Usuario = function (app, mongoose, passport, config) {
         var _escola = req.body.escola;
         var _perfil = req.body.perfil;
         var _nome = req.body.nome;
+        var _apelido = req.body.apelido;
         var _email = req.body.email;
         var _password = req.body.password;
-        
+
         console.log('nome = {0}, email = {1}, password = {2}'.replace('{0}', _nome).replace('{1}', _email).replace('{2}', _password));
 
         try {
@@ -35,6 +36,7 @@ var Usuario = function (app, mongoose, passport, config) {
             if (!_escola || _escola.length === 0) throw new Error('Escola inválida!');
             if (!_perfil || _perfil.length === 0) throw new Error('Perfil inválido!');
             if (!_nome || _nome.length === 0) throw new Error('Nome inválido!');
+            if (!_apelido || _apelido.length === 0) throw new Error('Apelido inválido!');
             if (!_email || _email.length === 0) throw new Error('Usuário ou senha inválidos');
             if (!_password || _password.length <= 6) throw new Error('Usuário ou senha inválidos');
 
@@ -65,6 +67,7 @@ var Usuario = function (app, mongoose, passport, config) {
                     escola: _escola,
                     perfil: _perfil,
                     nome: _nome,
+                    apelido: _apelido,
                     email: _email,
                     ativo: true,
                     emailConfirmado: false,
@@ -106,9 +109,9 @@ var Usuario = function (app, mongoose, passport, config) {
             email: req.user.email,
             id: req.user._id
         }, config.auth.secretKey, {
-            issuer: config.auth.issuer,
-            audience: config.auth.audience
-        });
+                issuer: config.auth.issuer,
+                audience: config.auth.audience
+            });
 
         console.log('gerando token = {0}'.replace('{0}', token));
 
@@ -134,9 +137,13 @@ var Usuario = function (app, mongoose, passport, config) {
     });
 
     router.get('/usuario/me', passport.authenticate('jwt', { session: false }), function (req, res) {
+        console.log('apelido = {0}'.replace('{0}', req.user.apelido));
         return res.status(200).json({
-            nome: req.user.nome,
-            email: req.user.email
+            data: {
+                nome: req.user.nome,
+                apelido: req.user.apelido,
+                email: req.user.email
+            }
         });
     });
 

@@ -12,10 +12,12 @@
             var _endpoint = baseResource.getResource(_url, _paramDefaults, _actions, _options);
 
             // methods
-            function _getEscolasByUsuario() {
-                
+            function _getEscolasByUsuario(fn) {
                 var params = {};
-                return _endpoint.query(params);
+                if (fn && typeof fn === 'function')
+                    return _endpoint.get(params, fn).$promise;
+                else
+                    return _endpoint.get(params).$promise;
             }
 
             // service interface

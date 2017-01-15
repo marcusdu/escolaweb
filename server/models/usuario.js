@@ -17,6 +17,7 @@ var Usuario = function (mongoose) {
 
         // properties
         nome: { type: String, required: [true, 'Campo obrigatório!']},
+        apelido: { type: String, required: [true, 'Campo obrigatório!']},
         email: { type: String, require: [true, 'Campo obrigatório!'] },
         emailConfirmado: { type: Boolean },
         ativo: { type: Boolean },

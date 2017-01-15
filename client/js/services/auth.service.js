@@ -3,7 +3,7 @@
 
     // service registration
     angular.module('escolaweb')
-        .factory('authService', ['$auth', function ($auth) {
+        .factory('authService', ['$auth', 'baseResource', function ($auth, baseResource) {
             // get the context
 
             // enable two ways of invocation
@@ -21,11 +21,21 @@
                 return $auth.login(usuario);
             };
 
-            
+            var _myInfo = function () {
+                // variables
+                var _url = '/api/usuario/me';
+                var _paramDefaults = {};
+                var _actions = {};
+                var _options = {};
+                return baseResource.getResource(_url, _paramDefaults, _actions, _options).get({}).$promise;
+            };
+
+
 
             // service interface
             return {
-                login: _login
+                login: _login,
+                myInfo: _myInfo
             };
         }]);
 })();

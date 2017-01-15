@@ -1,1 +1,35 @@
-<h3>Escolas </h3>
+<div ng-cloak>
+    <h3>Gerenciar escolas </h3>
+
+    <!-- datatable -->
+    <md-toolbar class="md-table-toolbar md-default">
+        <div class="md-toolbar-tools">
+            <span></span>
+        </div>
+    </md-toolbar>
+
+    <md-table-container>
+        <table md-table>
+            <thead md-head md-order="ctx.query.order">
+                <tr md-row>
+                    <th md-column md-order-by="nome"><span>Escola</span></th>
+                    <th md-column md-order-by="endereco.rua"><span>Rua</span></th>
+                    <th md-column md-order-by="endereco.cidade">Cidade</th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="escola in ctx.data.escolas">
+                    <td md-cell>{{escola.nome}}</td>
+                    <td md-cell>{{escola.endereco.rua}}</td>
+                    <td md-cell>{{escola.endereco.cidade}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <md-table-pagination md-limit="ctx.query.limit" 
+            md-limit-options="[5, 10, 15]" 
+            md-page="ctx.query.page" 
+            md-total="{{ctx.data.escolas.length}}" md-page-select>
+    </md-table-pagination>
+</div>

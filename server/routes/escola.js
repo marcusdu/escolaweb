@@ -13,11 +13,8 @@ var Escola = function (app, mongoose, passport) {
 
     // GET /api/escolas
     router.get('/escolas', passport.authenticate('jwt', { session: false }), function (req, res) {
-        // buscar o id do usuario
-
         // query database
         Escolas.find({
-            usuario: req.user._id
         }, function (err, escolas) {
             if (err) {
                 return res.status(500).json({

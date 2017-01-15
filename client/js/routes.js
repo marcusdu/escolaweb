@@ -25,7 +25,17 @@ angular.module('escolaweb')
         // ===== auth filters =====
 
         // ===== rota base =====
-        $stateProvider.state('base', { templateUrl: 'templates/layout.html' });
+        $stateProvider.state('base', {
+            templateUrl: 'templates/layout.html',
+            resolve: {
+                authService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([{
+                        type: 'js',
+                        path: 'js/services/auth.service.js'
+                    }]);
+                }]
+            }
+        });
         $stateProvider.state('base.home', {
             url: '/',
             views: {

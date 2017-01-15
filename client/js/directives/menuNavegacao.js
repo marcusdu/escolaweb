@@ -1,15 +1,19 @@
 //  directive registration
 angular.module('escolaweb')
-    .directive('menuNavegacao', [function () {
+    .directive('menuNavegacao', ['authService', function (authService) {
         return {
             restrict: 'E',
             templateUrl: 'templates/menu-navegacao.html',
             controller: function ($scope) {
                 // informações do usuário
-                $scope.usuario = {
+                authService.myInfo().then(function(response){
+                    $scope.usuario = response.data;
+                });
+
+                /*$scope.usuario = {
                     nome: 'Flor de Maria',
                     email: 'flormapacheco@gmail.com'
-                };
+                };*/
 
                 // itens do menu normal
                 $scope.menu = [{

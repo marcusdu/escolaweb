@@ -28,7 +28,7 @@ var Auth = function (passport, mongoose, config) {
         ignoreExpiration: false
     }, function (jwtpayload, done) {
         // selecionar os campos a serem retornados
-        var fieldsToReturn = 'escola perfil nome email ativo';
+        var fieldsToReturn = 'escola perfil nome apelido email ativo';
 
         // get parameters from jwt sent in the header
         var _email = jwtpayload.email;
