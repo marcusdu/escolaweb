@@ -11,7 +11,6 @@
         var ctx = this;
 
         ctx.titulo = 'Home';
-        ctx.estado = $state.is('home') ? 'home state' : '!home state';
     }
 
     // DI registration

@@ -5,11 +5,10 @@ var Aluno = function (mongoose) {
     var Schema = mongoose.Schema;
     var AlunoSchema = new Schema({
         // relationships
-        escola: { type: Schema.Types.ObjectId, ref: 'Escola' },
-        usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' },
+        escola: { type: Schema.Types.ObjectId, ref: 'Escola', required: [true, 'Campo obrigatório!']},
+        usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: [true, 'Campo obrigatório!']},
 
         // properties
-        nome: { type: String },
         pai: {
             nome: { type: String },
             telefone: { type: String },
@@ -36,9 +35,7 @@ var Aluno = function (mongoose) {
             },
             pais: { type: String },
             cep: { type: String }
-        },
-        dataCriacao: { type: Date, default: Date.now },
-        dataAtualizacao: { type: Date, default: Date.now }
+        }
     });
 
     // log

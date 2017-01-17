@@ -130,7 +130,7 @@ angular.module('escolaweb')
 
         // rota de escolas
         $stateProvider.state('base.escolas', {
-            url: '/home',
+            url: '/escolas',
             views: {
                 'content': {
                     templateUrl: 'templates/home-escolas.html',
@@ -150,6 +150,30 @@ angular.module('escolaweb')
                         }],
                         loginRequired: _loginRequired
                     }
+                }
+            }
+        });
+        $stateProvider.state('base.escolas.detalhe', {
+            url: '/:id',
+            views: {
+                'content@base': {
+                    templateUrl: 'templates/home-escola.html',
+                    controller: 'HomeEscolaController',
+                    controllerAs: 'ctx',
+                    /*resolve: {
+                        controller: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    type: 'js',
+                                    path: 'js/services/escola.service.js'
+                                },
+                                {
+                                    type: 'js',
+                                    path: 'js/controllers/home.escola.controller.js'
+                                }]);
+                        }],
+                        loginRequired: _loginRequired
+                    }*/
                 }
             }
         });

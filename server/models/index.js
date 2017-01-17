@@ -11,7 +11,8 @@ var models = function(mongoose){
         professor: _require('./professor'),
         usuario: _require('./usuario'),
         perfil: _require('./perfil'),
-        acesso: _require('./acesso')
+        acesso: _require('./acesso'),
+        usuarioEscola: _require('./usuarioEscola')
     };
 };
 module.exports = models;

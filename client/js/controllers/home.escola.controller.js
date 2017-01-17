@@ -2,14 +2,16 @@
     'use strict';
 
     // controller constructor
-    function HomeEscolaController($log, $scope, escolaService) {
+    function HomeEscolaController($log, $scope, $state, escolaService) {
         // get the context
-        var ctx = this;        
+        var ctx = this;
 
         // properties
+        ctx.$state = $state;
         var bookmark;
         ctx.data = {
-            escolas: []
+            escolas: [],
+            escola: null
         };
         ctx.selected = [];
         ctx.query = {
@@ -19,6 +21,13 @@
             page: 1
         };
         ctx.promise = null;
+
+        // utils
+        ctx.utils = {
+            getState: function (id) {
+                return { id: id };
+            }
+        };
 
         // actions
         ctx.actions = {
@@ -30,13 +39,21 @@
         // loading
         ctx.loading = {
             load: function () {
-                // ctx.promise = escolaService.getEscolasByUsuario(ctx.actions.onSuccess);
-
-                escolaService.getEscolasByUsuario().then(function(response){
-                    ctx.data.escolas = response.data;
-                }).catch(function(err){
-                    $log.error(err);
-                });
+                var state = $state.current;
+                switch (state.name) {
+                    case 'base.escolas':
+                        escolaService.getEscolasByUsuario().then(function (response) {
+                            ctx.data.escolas = response.data;
+                        }).catch(function (err) {
+                            $log.error(err);
+                        });
+                        break;
+                    default:
+                        escolaService.getEscolaById($state.params.id).then(function(response){
+                            ctx.data.escola = response.data;
+                        });
+                        break;
+                }
             }
         };
 
@@ -59,7 +76,7 @@
     }
 
     // register DI
-    HomeEscolaController.$inject = ['$log', '$scope', 'escolaService'];
+    HomeEscolaController.$inject = ['$log', '$scope', '$state', 'escolaService'];
 
     // controller registration
     angular.module('escolaweb').controller('HomeEscolaController', HomeEscolaController);

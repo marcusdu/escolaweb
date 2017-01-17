@@ -5,13 +5,10 @@ var Professor = function (mongoose) {
     var Schema = mongoose.Schema;
     var ProfessorSchema = new Schema({
         // relationships
+        usuario: { type: Schema.Types.ObjectId, ref: 'Usuario'},
 
         // properties
-        nome: { type: String },
-        telefone: { type: String },
-        email: { type: String },
-        dataCriacao: { type: Date, default: Date.now },
-        dataAtualizacao: { type: Date, default: Date.now }
+        disciplina: { type: String, required: [true, 'Campo obrigatório!']}
     });
 
     // log

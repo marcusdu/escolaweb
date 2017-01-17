@@ -22,32 +22,33 @@ var Usuario = function (app, mongoose, passport, config) {
 
     router.post('/usuario', function (req, res) {
         // obter dados da requisição
-        var _escola = req.body.escola;
-        var _perfil = req.body.perfil;
+        //var _escola = req.body.escola;
+        //var _perfil = req.body.perfil;
         var _nome = req.body.nome;
         var _apelido = req.body.apelido;
         var _email = req.body.email;
         var _password = req.body.password;
+        var _contato = req.body.contato;
 
         console.log('nome = {0}, email = {1}, password = {2}'.replace('{0}', _nome).replace('{1}', _email).replace('{2}', _password));
 
         try {
             // verificações de segurança
-            if (!_escola || _escola.length === 0) throw new Error('Escola inválida!');
-            if (!_perfil || _perfil.length === 0) throw new Error('Perfil inválido!');
+            //if (!_escola || _escola.length === 0) throw new Error('Escola inválida!');
+            //if (!_perfil || _perfil.length === 0) throw new Error('Perfil inválido!');
             if (!_nome || _nome.length === 0) throw new Error('Nome inválido!');
             if (!_apelido || _apelido.length === 0) throw new Error('Apelido inválido!');
             if (!_email || _email.length === 0) throw new Error('Usuário ou senha inválidos');
             if (!_password || _password.length <= 6) throw new Error('Usuário ou senha inválidos');
+            if (!_contato || !_contato.telefoneCelular || _contato.telefoneCelular.length === 0) throw new Error('Contato inválido');
 
-            Usuarios.findOne({ email: _email, escola: _escola }, function (err, usuario) {
+            // buscar usuário com o email informado
+            Usuarios.findOne({ email: _email }, function (err, usuario) {
                 // verificar se ocorreu algum erro na consulta
                 if (err) {
                     return res.status(500).json({
-                        status: 'error',
                         error: {
-                            message: 'Ocorreu um erro durante o processamento. Contacte o administrador do sistema.',
-                            code: ''
+                            message: 'Ocorreu um erro durante a operação!'
                         }
                     });
                 }
@@ -55,7 +56,6 @@ var Usuario = function (app, mongoose, passport, config) {
                 // verificar se o usuário existe
                 if (usuario) {
                     return res.status(400).json({
-                        status: 'error',
                         error: {
                             message: 'Nome de usuário já cadastrado.'
                         }
@@ -64,23 +64,21 @@ var Usuario = function (app, mongoose, passport, config) {
 
                 // cadastrar novo usuário
                 Usuarios.register(new Usuarios({
-                    escola: _escola,
-                    perfil: _perfil,
+                    //escola: _escola,
+                    //perfil: _perfil,
                     nome: _nome,
                     apelido: _apelido,
                     email: _email,
                     ativo: true,
                     emailConfirmado: false,
-                    dataCriacao: new Date()
+                    dataCriacao: new Date(),
+                    contato: _contato
                 }), _password, function (err, novoUsuario) {
                     if (err) {
                         // salvar log do erro no banco
                         return res.status(401).json({
-                            status: 'error',
                             error: {
-                                message: 'Ocorreu um erro durante a operação!',
-                                code: '00001',
-                                _obj: err
+                                message: 'Ocorreu um erro durante a operação!'
                             }
                         });
                     }

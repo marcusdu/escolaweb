@@ -12,8 +12,6 @@ var Usuario = function (mongoose) {
     // optional to define custom properties in the Usuario model
     var UsuarioSchema = new Schema({
         // relationships
-        escola: { type: Schema.Types.ObjectId, ref: 'Escola' },
-        perfil: { type: Schema.Types.ObjectId, ref: 'Perfil' },
 
         // properties
         nome: { type: String, required: [true, 'Campo obrigatório!']},
@@ -22,7 +20,11 @@ var Usuario = function (mongoose) {
         emailConfirmado: { type: Boolean },
         ativo: { type: Boolean },
         dataCriacao: { type: Date, default: Date.now },
-        dataAtualizacao: { type: Date,  default: Date.now }
+        dataAtualizacao: { type: Date,  default: Date.now },
+        contato: {
+            telefoneFixo: { type: String },
+            telefoneCelular: { type: String, required: [true, 'Campo obrigatório!'] }
+        }
     });
 
     UsuarioSchema.plugin(passportLocalMongoose, {

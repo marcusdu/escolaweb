@@ -19,17 +19,17 @@ angular.module('escolaweb')
                 $scope.menu = [{
                     titulo: 'Home',
                     estado: 'base.home',
-                    icone: 'dashboard'
+                    icone: 'home'
                 },
-                {
+                /*{
                     titulo: 'Gerenciar alunos',
                     estado: 'base.alunos',
                     icone: 'dashboard'
-                },
+                },*/
                 {
-                    titulo: 'Gerenciar escolas',
+                    titulo: 'Minhas escolas',
                     estado: 'base.escolas',
-                    icone: 'message'
+                    icone: 'assignment'
                 }];
 
                 // itens do menu admin

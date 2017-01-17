@@ -4,7 +4,7 @@
     <!-- datatable -->
     <md-toolbar class="md-table-toolbar md-default">
         <div class="md-toolbar-tools">
-            <span></span>
+            <span>Minhas Escolas</span>
         </div>
     </md-toolbar>
 
@@ -15,6 +15,7 @@
                     <th md-column md-order-by="nome"><span>Escola</span></th>
                     <th md-column md-order-by="endereco.rua"><span>Rua</span></th>
                     <th md-column md-order-by="endereco.cidade">Cidade</th>
+                    <th md-column>Ações</th>
                 </tr>
             </thead>
             <tbody md-body>
@@ -22,6 +23,14 @@
                     <td md-cell>{{escola.nome}}</td>
                     <td md-cell>{{escola.endereco.rua}}</td>
                     <td md-cell>{{escola.endereco.cidade}}</td>
+                    <td md-cell>
+                        <md-button class="md-fab md-mini md-primary" 
+                                    aria-label="Gerenciar {{escola.nome}}"
+                                    ng-click="ctx.$state.go('base.escolas.detalhe', ctx.utils.getState(escola._id), {reload:true})">
+                            <md-icon md-svg-src="img/icons/manage.svg"></md-icon>
+                        </md-button>
+
+                    </td>
                 </tr>
             </tbody>
         </table>
