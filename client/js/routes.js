@@ -177,6 +177,30 @@ angular.module('escolaweb')
                 }
             }
         });
+        $stateProvider.state('base.escolas.detalhe.alunos', {
+            url: '/alunos',
+            views:{
+                'content@base': {
+                    templateUrl: 'templates/home-escola-alunos.html',
+                    controller: 'HomeEscolaAlunosController',
+                    controllerAs: 'ctx',
+                    resolve:{
+                        controller: ['$ocLazyLoad', function($ocLazyLoad){
+                            return $ocLazyLoad.load([
+                                {
+                                    type: 'js',
+                                    path: 'js/services/aluno.service.js'
+                                },
+                                {
+                                    type: 'js',
+                                    path: 'js/controllers/home.escola.alunos.controller.js'
+                                }
+                            ]);
+                        }]
+                    }
+                }
+            }
+        });
 
         $urlRouterProvider.otherwise('/');
     });

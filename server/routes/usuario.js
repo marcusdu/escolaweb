@@ -7,14 +7,6 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 
-var print = function (obj) {
-    if (!obj) return;
-
-    for (var p in obj) {
-        console.log('{0} = {1}'.replace('{0}', p).replace('{1}', obj[p]));
-    }
-};
-
 var Usuario = function (app, mongoose, passport, config) {
     var router = express.Router();
     var Usuarios = mongoose.model('Usuario');

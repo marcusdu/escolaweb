@@ -8,13 +8,14 @@ var express = require('express');
 var Setup = function (app, mongoose, passport) {
     // get router
     var router = express.Router();
+    var Perfis = mongoose.model('Perfil');
     var Estados = mongoose.model('Estado');
 
     // novo doador
     // passport.authenticate('jwt', { session: false })
     router.get('/setup', function (req, res) {
-        Estados.find({}, function(err, estados){
-            if(err){
+        Estados.find({}, function (err, estados) {
+            if (err) {
                 return res.status(500).json({
                     error: err
                 });
@@ -25,7 +26,7 @@ var Setup = function (app, mongoose, passport) {
             });
         });
     });
-    router.post('/setup', function (req, res) {
+    router.post('/setup/estados', function (req, res) {
         // criar Estados
         var estados = [
             {
@@ -138,7 +139,7 @@ var Setup = function (app, mongoose, passport) {
             }];
 
         // salvar estados
-        Estados.collection.insert(estados, function (err, docs) {
+        Estados.collection.insert(estados, function (err, estados) {
             if (err) return res.status(500).json({
                 message: 'Ocorreu um erro durante o processamento da requisição'
             });
@@ -148,7 +149,24 @@ var Setup = function (app, mongoose, passport) {
                 message: 'Estados criados com sucesso!'
             });
         });
-    })
+    });
+
+    router.post('/setup/perfis', function (req, res) {
+        var perfis = [{
+            nome: 'Administrador',
+            ativo: true
+        }, {
+            nome: 'Estudante',
+            ativo: true
+        }];
+
+        Perfis.collection.insert(perfis, function (err2, perfisSalvos) {
+            // return status
+            return res.status(200).json({
+                message: 'Perfis criados com sucesso!'
+            });
+        });
+    });
 
     // log
     console.log('setup route registration finished');

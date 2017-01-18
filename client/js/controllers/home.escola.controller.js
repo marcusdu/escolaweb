@@ -22,6 +22,11 @@
         };
         ctx.promise = null;
 
+        // constants
+        ctx.constants = {
+            image: 'http://placehold.it/48x48'
+        };
+
         // utils
         ctx.utils = {
             getState: function (id) {

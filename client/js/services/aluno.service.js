@@ -4,17 +4,21 @@
     // service registration
     angular.module('escolaweb')
         .factory('alunoService', ['baseResource', function (baseResource) {
-            // variables
-            var _url = '/api/alunos';
-            var _paramDefaults = {};
-            var _actions = {};
-            var _options = {};
-            var _endpoint = baseResource.getResource(_url, _paramDefaults, _actions, _options);
-
             // methods
-            function _getAlunosByEscola() {                
-                var params = {};
-                return _endpoint.query(params).$promise;
+            function _getAlunosByEscola(id) {
+                // variables
+                var _url = '/api/escolas/:escola/alunos';
+                var _paramDefaults = {};
+                var _actions = {};
+                var _options = {};
+                var _endpoint = baseResource.getResource(_url, _paramDefaults, _actions, _options);
+
+                if (!id || id.length === 0) throw new Error('id');
+
+                var params = {
+                    escola: id
+                };
+                return _endpoint.get(params).$promise;
             }
 
             // service interface

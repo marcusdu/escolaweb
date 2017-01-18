@@ -9,6 +9,7 @@ var Escola = function (app, mongoose, passport) {
     // get router
     var router = express.Router();
     var Usuarios = mongoose.model('Usuario');
+    var Alunos = mongoose.model('Aluno');
     var Perfis = mongoose.model('Perfil');
     var Escolas = mongoose.model('Escola');
     var UsuarioEscolas = mongoose.model('UsuarioEscola');
@@ -22,8 +23,7 @@ var Escola = function (app, mongoose, passport) {
             if (err) {
                 return res.status(500).json({
                     error: {
-                        message: 'Ocorrreu um erro durante o processamento. Contacte o administrador do sistema.',
-                        code: ''
+                        message: 'Ocorreu um erro durante a operação!'
                     }
                 });
             }
@@ -35,29 +35,58 @@ var Escola = function (app, mongoose, passport) {
     });
 
     // GET /api/escolas/:id
-    router.get('/escolas/:id', passport.authenticate('jwt', { session: false }), function(req, res){
-        Escolas.findOne({
-            _id: req.params.id
-        }, function(err, escola){
-            if (err) {
-                return res.status(500).json({
-                    error: {
-                        message: 'Ocorrreu um erro durante o processamento. Contacte o administrador do sistema.',
-                        code: ''
-                    }
-                });
-            }
+    router.get('/escolas/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
+        Escolas.findOne({ _id: req.params.id })
+            .populate('endereco.estado', '-_id nome sigla')
+            .select('-_id nome endereco.rua endereco.cidade endereco.estado')
+            .exec(function (err, escola) {
+                if (err) {
+                    return res.status(500).json({
+                        error: {
+                            message: 'Ocorreu um erro durante a operação!'
+                        }
+                    });
+                }
 
-            if(!escola){
-                return res.status(400).json({
-                    message: 'A escola não existe!'
-                });
-            }
+                if (!escola) {
+                    return res.status(400).json({
+                        message: 'A escola não existe!'
+                    });
+                }
 
-            return res.status(200).json({
-                data: escola
+                return res.status(200).json({
+                    data: escola
+                });
             });
-        });
+    });
+
+    // GET /api/escolas/:id
+    router.get('/escolas/:id/alunos', passport.authenticate('jwt', { session: false }), function (req, res) {
+        Alunos.find({ escola: req.params.id })
+            .populate({
+                path: 'escola',
+                model: 'Escola',
+                select: 'nome endereco.rua'
+            })
+            .populate({
+                path: 'usuario',
+                model: 'Usuario',
+                select: 'nome email'
+            })
+            .select('escola usuario pai.telefone mae.telefone')
+            .exec(function (err, alunos) {
+                if (err) {
+                    return res.status(500).json({
+                        error: {
+                            message: 'Ocorreu um erro durante a operação!'
+                        }
+                    });
+                }
+
+                return res.status(200).json({
+                    data: alunos
+                });
+            });
     });
 
     // novo doador

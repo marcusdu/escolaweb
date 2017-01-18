@@ -1,0 +1,13 @@
+<md-list flex ng-cloak ng-init="ctx.loading.load()">
+    <md-subheader class="md-no-sticky">Alunos</md-subheader>
+    <md-list-item class="md-2-line" ng-repeat="aluno in ctx.data.alunos" ng-click="goToPerson(person.name, $event)" class="noright">
+        <img alt="{{ aluno.usuario.nome }}" ng-src="{{ ctx.constants.image }}" class="md-avatar" />
+        <div class="md-list-item-text" layout="column">
+            <h3>{{ aluno.usuario.nome }}</h3>
+            <h4>{{ aluno.usuario.email }}</h4>
+        </div>
+        <md-checkbox class="md-secondary" ng-model="ctx.model.aluno"></md-checkbox>
+        <md-icon md-svg-icon="communication:email" ng-click="doSecondaryAction($event)" aria-label="Enviar email" class="md-secondary md-hue-3"></md-icon>
+        <md-icon class="md-secondary" ng-click="doSecondaryAction($event)" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
+    </md-list-item>
+</md-list>

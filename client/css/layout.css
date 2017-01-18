@@ -58,4 +58,9 @@ md-sidenav ng-mg-icon{
   background-color: blue;
 }
 
+.detalhe-escola .md-card-image
+{
+  max-height: 200px !important;
+}
+.back-button{ cursor: pointer;}
 
