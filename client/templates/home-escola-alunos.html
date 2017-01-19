@@ -6,8 +6,14 @@
             <h3>{{ aluno.usuario.nome }}</h3>
             <h4>{{ aluno.usuario.email }}</h4>
         </div>
-        <md-checkbox class="md-secondary" ng-model="ctx.model.aluno"></md-checkbox>
-        <md-icon md-svg-icon="communication:email" ng-click="doSecondaryAction($event)" aria-label="Enviar email" class="md-secondary md-hue-3"></md-icon>
-        <md-icon class="md-secondary" ng-click="doSecondaryAction($event)" aria-label="Chat" md-svg-icon="communication:message"></md-icon>
+        <md-button ng-click="ctx.actions.sendEmail(aluno, $event)" class="md-icon-button" aria-label="Enviar email para {{aluno.usuario.email}}">
+            <ng-md-icon icon="email" style="fill: gray;"></ng-md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Editar {{aluno.usuario.nome}}">
+            <ng-md-icon icon="edit" style="fill: gray;"></ng-md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Excluir {{aluno.usuario.nome}}">
+            <ng-md-icon icon="delete" style="fill: gray;"></ng-md-icon>
+        </md-button>
     </md-list-item>
 </md-list>

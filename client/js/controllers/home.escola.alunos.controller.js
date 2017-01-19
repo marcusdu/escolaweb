@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function HomeEscolaAlunosController($state, $mdToast, alunoService) {
+    function HomeEscolaAlunosController($state, $mdToast, $mdDialog, alunoService) {
         // get the context
         var ctx = this;
 
@@ -12,7 +12,8 @@
 
         // data
         ctx.data = {
-            alunos: []
+            alunos: [],
+            aluno: null
         };
 
         // constants
@@ -24,6 +25,26 @@
         // properties
 
         // model
+
+        // actions
+        ctx.actions = {
+            sendEmail: function(aluno, ev){
+                // mostrar modal com editor de email
+                $mdDialog.show({
+                    controller: function($mdToast, $scope){
+
+                    },
+                    locals: {
+                        aluno: aluno
+                    },
+                    bindToController: true,
+                    template: '<h2>Enviar email para {{ aluno.usuario.email }}</h2>',
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    fullScreen: false
+                });
+            }
+        };
 
         // loading
         ctx.loading = {
@@ -39,7 +60,7 @@
         };
     }
 
-    HomeEscolaAlunosController.$inject = ['$state', '$mdToast', 'alunoService'];
+    HomeEscolaAlunosController.$inject = ['$state', '$mdToast', '$mdDialog', 'alunoService'];
 
     angular.module('escolaweb')
         .controller('HomeEscolaAlunosController', HomeEscolaAlunosController);
