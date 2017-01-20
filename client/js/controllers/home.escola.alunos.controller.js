@@ -10,6 +10,14 @@
             aluno: null
         };
 
+        // query
+        ctx.query = {
+            filter: '',
+            order: 'nome',
+            limit: 5,
+            page: 1
+        };
+
         // data
         ctx.data = {
             alunos: [],

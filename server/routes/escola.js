@@ -73,7 +73,17 @@ var Escola = function (app, mongoose, passport) {
                 model: 'Usuario',
                 select: 'nome email'
             })
-            .select('escola usuario pai.telefone mae.telefone')
+            .populate({
+                path: 'turma',
+                model: 'Turma',
+                select: 'nome turno serie',
+                populate:{
+                    path: 'serie',
+                    model: 'Serie',
+                    select: 'nome'
+                }
+            })
+            .select('escola usuario pai.telefone mae.telefone turma')
             .exec(function (err, alunos) {
                 if (err) {
                     return res.status(500).json({

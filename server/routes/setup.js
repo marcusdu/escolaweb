@@ -168,6 +168,46 @@ var Setup = function (app, mongoose, passport) {
         });
     });
 
+    router.post('/setup/series', function (req, res) {
+        var Series = mongoose.model('Serie');
+        var _series = [{
+            nome: '1ª Série',
+            ativo: true
+        }, {
+            nome: '2ª Série',
+            ativo: true
+        },
+        {
+            nome: '3ª Série',
+            ativo: true
+        },
+        {
+            nome: '4ª Série',
+            ativo: true
+        },
+        {
+            nome: '5ª Série',
+            ativo: true
+        },
+        {
+            nome: '6ª Série',
+            ativo: true
+        }];
+
+        Series.collection.insert(_series, function (err, seriesSalvas) {
+            if(err){
+                return res.status(400).json({
+                    message: 'Ocorreu um erro durante a operação!'
+                });
+            }
+
+            // return status
+            return res.status(200).json({
+                message: 'Séries criadas com sucesso!'
+            });
+        });
+    });
+
     // log
     console.log('setup route registration finished');
 

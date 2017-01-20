@@ -12,6 +12,8 @@ var models = function(mongoose){
         usuario: _require('./usuario'),
         perfil: _require('./perfil'),
         acesso: _require('./acesso'),
+        serie: _require('./serie'),
+        turma: _require('./turma'),
         usuarioEscola: _require('./usuarioEscola')
     };
 };

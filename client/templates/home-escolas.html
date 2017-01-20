@@ -2,11 +2,11 @@
     <h3>Gerenciar escolas </h3>
 
     <!-- datatable -->
-    <md-toolbar class="md-table-toolbar md-default">
+    <!--<md-toolbar class="md-table-toolbar md-default">
         <div class="md-toolbar-tools">
             <span>Minhas Escolas</span>
         </div>
-    </md-toolbar>
+    </md-toolbar>-->
 
     <md-table-container>
         <table md-table>
@@ -24,10 +24,10 @@
                     <td md-cell>{{escola.endereco.rua}}</td>
                     <td md-cell>{{escola.endereco.cidade}}</td>
                     <td md-cell>
-                        <md-button class="md-fab md-mini md-primary" 
+                        <md-button title="Gerenciar escola" class="md-fab md-mini md-primary" 
                                     aria-label="Gerenciar {{escola.nome}}"
                                     ng-click="ctx.$state.go('base.escolas.detalhe', ctx.utils.getState(escola._id), {reload:true})">
-                            <md-icon md-svg-src="img/icons/manage.svg"></md-icon>
+                            <ng-md-icon icon="developer_dashboard" style="fill: white;"></ng-md-icon> 
                         </md-button>
 
                     </td>

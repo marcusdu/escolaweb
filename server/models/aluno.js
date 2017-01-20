@@ -7,6 +7,7 @@ var Aluno = function (mongoose) {
         // relationships
         escola: { type: Schema.Types.ObjectId, ref: 'Escola', required: [true, 'Campo obrigatório!']},
         usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: [true, 'Campo obrigatório!']},
+        turma: { type: Schema.Types.ObjectId, ref: 'Turma' },
 
         // properties
         pai: {
