@@ -2,7 +2,7 @@
     <md-card md-theme="default" md-theme-watch>
         <md-card-header>
             <md-card-avatar>
-                <md-icon class="back-button md-avatar-icon" md-svg-icon="img/icons/back-button.svg" ui-sref="base.escolas"></md-icon>
+                <ng-md-icon class="back-button" icon="arrow_back" style="fill: gray;" ui-sref="base.escolas"></ng-md-icon>
             </md-card-avatar>
             <md-card-header-text>
                 <span class="md-subhead">Voltar</span>
@@ -18,7 +18,7 @@
         <md-card-content>
         </md-card-content>
         <md-card-actions layout="row" layout-align="end center">
-            <md-button ui-sref="base.escolas.detalhe.alunos">Alunos</md-button>
+            <md-button class="md-primary" ui-sref="base.escolas.detalhe.alunos">Alunos</md-button>
             <md-button>Professores</md-button>
         </md-card-actions>
     </md-card>

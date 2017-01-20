@@ -99,9 +99,8 @@ var Escola = function (app, mongoose, passport) {
             });
     });
 
-    // novo doador
-    // passport.authenticate('jwt', { session: false })
-    router.post('/escola', function (req, res) {
+    // POST api/escola
+    router.post('/escola', passport.authenticate('jwt', { session: false }), function (req, res) {
         // get data from request
         var _nome = req.body.nome;
         var _endereco = req.body.endereco;
@@ -135,7 +134,6 @@ var Escola = function (app, mongoose, passport) {
                     }
 
                     return res.status(200).json({
-                        status: 'success',
                         message: 'Escola criada com sucesso!'
                     });
                 });
