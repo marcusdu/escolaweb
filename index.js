@@ -18,9 +18,6 @@ var expressSession = require('express-session');
 var cookieSession = require('cookie-session');
 var app = express();
 
-// set base path for module loading
-global.__base = __dirname + '/';
-
 // db connection
 mongoose.connect(config.db, function(error){
     if(error){ console.error(error); }
@@ -35,14 +32,7 @@ app.use(morgan(config.log));
 app.use(cookieParser(config.auth.secretKey));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-/*app.use(cookieSession({
-    name: 'ewSess',
-    keys: [config.auth.secretKey],
-    maxAge: 24 * 60 * 60 * 1000
-}));
-app.use(expressSession());*/
 app.use(passport.initialize());
-//app.use(passport.session());
 app.use(express.Router());
 
 // custom modules registration
